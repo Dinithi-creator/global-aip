@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IFS Copperleaf — AI-Powered Capital Strategy</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ifs-purple:#3D0066;--ifs-purple-mid:#5B0099;--ifs-purple-light:#7B2FBE;
+  --ifs-green:#00E5A0;--ifs-green-dark:#00B87A;--ifs-teal:#00C8C8;
+  --ifs-lavender:#B39DDB;--ifs-bg:#1A0033;--ifs-bg-mid:#2D0052;
+  --ifs-border:rgba(255,255,255,0.12);
+  --ifs-muted:rgba(255,255,255,0.65);
+  --r:8px;--rl:14px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#1A0033;line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{background:var(--ifs-purple);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.1)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{width:32px;height:32px}
+.nav-brand{font-size:18px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.nav-divider{width:1px;height:20px;background:rgba(255,255,255,0.25);margin:0 12px}
+.nav-sub{font-size:12px;color:rgba(255,255,255,0.6)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.72);font-size:13px;padding:0 14px;height:60px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:color .2s}
+.nav-links a:hover{color:#fff;border-bottom-color:var(--ifs-green)}
+
+/* HERO */
+.hero{position:relative;min-height:500px;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(105deg,rgba(26,0,51,0.97) 0%,rgba(61,0,102,0.85) 50%,rgba(26,0,51,0.5) 100%),url('https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2023/03/1920x500_ESG-1200x350.webp') center/cover no-repeat}
+.hero-content{position:relative;max-width:700px;padding:4rem 3rem}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.35);color:var(--ifs-green);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:1.5rem;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{font-size:clamp(28px,4vw,46px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem}
+.hero h1 .hl{background:linear-gradient(90deg,var(--ifs-green),var(--ifs-teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--ifs-muted);margin-bottom:2rem;max-width:540px}
+.hero-val{background:rgba(255,255,255,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:2rem;font-size:14px;color:rgba(255,255,255,0.8);max-width:540px}
+.hero-val strong{color:var(--ifs-green);display:block;margin-bottom:4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--ifs-green);color:var(--ifs-purple);font-size:14px;font-weight:700;padding:12px 24px;border-radius:30px;display:inline-block}
+.btn-outline{background:transparent;color:#fff;font-size:14px;font-weight:500;padding:11px 24px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.35);display:inline-block}
+
+/* STATS */
+.stats-bar{background:#fff;padding:2.5rem 2rem}
+.stats-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.stat-item{text-align:center;padding:0 2rem;border-right:1px solid #e8e0f0}
+.stat-item:last-child{border-right:none}
+.stat-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.25rem}
+.stat-num{font-size:40px;font-weight:800;color:var(--ifs-purple-mid);line-height:1;margin-bottom:.4rem}
+.stat-desc{font-size:13px;color:#666;line-height:1.4}
+
+/* SECTIONS */
+section{padding:4rem 2rem}
+.section-inner{max-width:980px;margin:0 auto}
+.section-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ifs-green);margin-bottom:.75rem}
+.section-title{font-size:clamp(22px,3vw,32px);font-weight:800;color:#fff;margin-bottom:.75rem;line-height:1.2}
+.section-sub{font-size:16px;color:var(--ifs-muted);max-width:600px;margin-bottom:2.5rem}
+.light-section{background:#fff}
+.light-section .section-tag{color:var(--ifs-purple-mid)}
+.light-section .section-title{color:var(--ifs-purple)}
+.light-section .section-sub{color:#666}
+.bg-mid{background:var(--ifs-bg-mid)}
+.bg-value{background:linear-gradient(160deg,var(--ifs-bg-mid) 0%,var(--ifs-bg) 100%)}
+
+/* PROBLEM */
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.prob-card{background:rgba(255,255,255,0.04);border:0.5px solid var(--ifs-border);border-radius:var(--rl);padding:1.25rem;border-top:3px solid var(--ifs-purple-light)}
+.prob-card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:.5rem}
+.prob-card p{font-size:13px;color:var(--ifs-muted);line-height:1.55}
+.problem-statement{background:linear-gradient(135deg,var(--ifs-purple-mid),var(--ifs-bg-mid));border:1px solid rgba(0,229,160,0.2);border-radius:var(--rl);padding:2rem;margin-top:2rem;text-align:center}
+.problem-statement p{font-size:20px;font-weight:600;color:#fff;line-height:1.45}
+.problem-statement em{color:var(--ifs-green);font-style:normal}
+
+/* PERSONAS */
+.persona-tabs{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap}
+.ptab{padding:9px 20px;border-radius:30px;font-size:13px;font-weight:500;border:1.5px solid rgba(255,255,255,0.2);cursor:pointer;background:transparent;color:var(--ifs-muted);transition:all .2s}
+.ptab.active{background:var(--ifs-green);color:var(--ifs-purple);border-color:var(--ifs-green);font-weight:700}
+.persona-panel{display:none;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.persona-panel.active{display:grid}
+.persona-card{background:rgba(255,255,255,0.04);border:0.5px solid var(--ifs-border);border-radius:var(--rl);padding:1.25rem;border-left:3px solid var(--ifs-green)}
+.persona-card .role{font-size:12px;color:var(--ifs-green);font-weight:600;margin-bottom:.75rem}
+.persona-card h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:.25rem}
+.persona-card .challenge{font-size:13px;color:rgba(255,255,255,0.85);margin-bottom:.5rem}
+.persona-card .impact{font-size:12px;color:var(--ifs-muted);padding:8px 10px;background:rgba(0,229,160,0.06);border-radius:var(--r);border-left:2px solid rgba(0,229,160,0.3)}
+
+/* VALUE */
+.value-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.val-card{background:rgba(255,255,255,0.04);border:0.5px solid var(--ifs-border);border-radius:var(--rl);padding:1.25rem}
+.val-card:hover{background:rgba(0,229,160,0.06);border-color:rgba(0,229,160,0.3)}
+.val-icon{width:38px;height:38px;border-radius:10px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;font-size:18px}
+.val-card h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:.4rem}
+.val-card p{font-size:13px;color:var(--ifs-muted);line-height:1.55}
+
+/* HOW IT WORKS */
+.steps-wrap{background:#fff;border-radius:var(--rl);overflow:hidden;border:1px solid #e8e0f0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr)}
+.step{padding:1.75rem 1.5rem;border-right:1px solid #e8e0f0;position:relative}
+.step:last-child{border-right:none}
+.step-num{width:34px;height:34px;background:var(--ifs-purple-mid);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:.85rem}
+.step h4{font-size:15px;font-weight:700;color:var(--ifs-purple);margin-bottom:.4rem}
+.step p{font-size:13px;color:#666}
+
+/* CAMPAIGN FUNNEL */
+.funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.funnel-stage{border-radius:var(--rl);overflow:hidden;border:0.5px solid var(--ifs-border)}
+.funnel-head{padding:10px 12px;font-size:11px;font-weight:700;text-align:center;letter-spacing:.06em;text-transform:uppercase}
+.funnel-body{padding:10px 12px;background:rgba(255,255,255,0.03)}
+.funnel-body ul{list-style:none;padding:0}
+.funnel-body li{font-size:12px;color:var(--ifs-muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
+.funnel-body li:last-child{border-bottom:none}
+.funnel-body li::before{content:'→ ';color:var(--ifs-green);font-size:10px}
+.f1 .funnel-head{background:rgba(91,0,153,0.5);color:var(--ifs-lavender)}
+.f2 .funnel-head{background:rgba(91,0,153,0.4);color:var(--ifs-lavender)}
+.f3 .funnel-head{background:rgba(91,0,153,0.55);color:#fff}
+.f4 .funnel-head{background:rgba(61,0,102,0.8);color:#fff}
+.f5 .funnel-head{background:var(--ifs-green);color:var(--ifs-purple)}
+.sp-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:1.5rem}
+.sp-links a{font-size:13px;color:var(--ifs-green);font-weight:500}
+
+/* NURTURE */
+.nurture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.nurture-card{border-radius:var(--rl);border:0.5px solid var(--ifs-border);overflow:hidden}
+.nurture-head{padding:12px 16px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.nurture-head.tofu{background:rgba(91,0,153,0.4);color:var(--ifs-lavender)}
+.nurture-head.mofu{background:rgba(61,0,102,0.6);color:#fff}
+.nurture-head.bofu{background:var(--ifs-green);color:var(--ifs-purple)}
+.nurture-body{padding:12px 16px;background:rgba(255,255,255,0.03)}
+.nurture-body li{font-size:13px;color:var(--ifs-muted);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.07);list-style:none}
+.nurture-body li::before{content:'→ ';color:var(--ifs-green);font-size:11px}
+.nurture-body li:last-child{border-bottom:none}
+
+/* CALENDAR */
+.cal-table{width:100%;border-collapse:collapse;font-size:13px}
+.cal-table th{background:var(--ifs-purple-mid);color:#fff;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.04em}
+.cal-table td{padding:11px 14px;border-bottom:1px solid #e8e0f0;color:#333;vertical-align:top}
+.cal-table tr:last-child td{border-bottom:none}
+.cal-table tr:nth-child(even) td{background:#f9f7fc}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:10px;margin:1px}
+.badge-on{background:rgba(0,229,160,0.15);color:#00B87A;border:1px solid rgba(0,229,160,0.3)}
+.badge-paid{background:rgba(179,157,219,0.15);color:#B39DDB;border:1px solid rgba(179,157,219,0.3)}
+.badge-organic{background:rgba(91,0,153,0.1);color:#7B2FBE;border:1px solid rgba(91,0,153,0.2)}
+.badge-event{background:rgba(0,200,200,0.12);color:#00C8C8;border:1px solid rgba(0,200,200,0.3)}
+
+/* BLOGS */
+.blogs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.blog-card{border:0.5px solid var(--ifs-border);border-radius:var(--rl);overflow:hidden;background:rgba(255,255,255,0.04);display:block;transition:border-color .2s}
+.blog-card:hover{border-color:rgba(0,229,160,0.4)}
+.blog-img{width:100%;height:140px;object-fit:cover;display:block}
+.blog-body{padding:1rem}
+.blog-seq{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ifs-green);margin-bottom:.4rem}
+.blog-body h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:.4rem;line-height:1.4}
+.blog-body p{font-size:13px;color:var(--ifs-muted);margin-bottom:.75rem;line-height:1.5}
+.blog-link{font-size:13px;font-weight:600;color:var(--ifs-green)}
+
+/* REGIONAL */
+.region-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.region-card{background:rgba(255,255,255,0.04);border:0.5px solid var(--ifs-border);border-radius:var(--rl);padding:1.25rem}
+.region-head{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.region-flag{width:30px;height:30px;border-radius:50%;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.2);display:flex;align-items:center;justify-content:center;font-size:16px}
+.region-name{font-size:14px;font-weight:700;color:#fff}
+.region-focus{font-size:12px;color:var(--ifs-green);font-weight:600;margin-bottom:.6rem}
+.region-list{list-style:none;padding:0}
+.region-list li{font-size:12px;color:var(--ifs-muted);padding:3px 0}
+.region-list li::before{content:'→ ';color:var(--ifs-green)}
+
+/* BUYER JOURNEY */
+.journey{display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,0.03);border:0.5px solid var(--ifs-border);border-radius:var(--rl);overflow:hidden}
+.journey-stage{padding:1.75rem 1.5rem;border-right:1px solid rgba(255,255,255,0.1)}
+.journey-stage:last-child{border-right:none}
+.js-label{font-size:11px;color:var(--ifs-green);font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.5rem}
+.journey-stage h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:.6rem}
+.journey-stage p{font-size:13px;color:var(--ifs-muted);line-height:1.55}
+.journey-stage .ch{margin-top:.75rem;font-size:12px;color:rgba(255,255,255,0.3)}
+
+/* EXPERIENCE FLOW */
+.exp-flow{display:flex;border-radius:var(--rl);border:0.5px solid var(--ifs-border);overflow:hidden}
+.exp-step{flex:1;padding:1.25rem;border-right:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03)}
+.exp-step:last-child{border-right:none}
+.esp-num{font-size:10px;font-weight:700;color:var(--ifs-green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.exp-step h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:.3rem}
+.exp-step p{font-size:12px;color:var(--ifs-muted);line-height:1.5}
+
+/* CONVERSION */
+.conversion-bg{background:linear-gradient(135deg,var(--ifs-purple-mid) 0%,var(--ifs-purple) 100%);padding:4rem 2rem}
+.conversion-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.conv-text h2{font-size:28px;font-weight:800;color:#fff;margin-bottom:.5rem}
+.conv-text p{font-size:15px;color:rgba(255,255,255,0.75)}
+.conv-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-green{background:var(--ifs-green);color:var(--ifs-purple);font-size:14px;font-weight:700;padding:12px 24px;border-radius:30px;display:inline-block}
+.btn-ghost{background:transparent;color:#fff;font-size:14px;font-weight:500;padding:11px 24px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.4);display:inline-block}
+
+/* BANNER + FOOTER */
+.img-banner{width:100%;height:180px;object-fit:cover;display:block;opacity:.7}
+footer{background:var(--ifs-purple);padding:2rem;text-align:center;border-top:1px solid rgba(255,255,255,0.1)}
+footer p{font-size:13px;color:rgba(255,255,255,0.4)}
+footer a{color:rgba(255,255,255,0.5)}
+footer a:hover{color:var(--ifs-green)}
+
+@media(max-width:640px){
+  .funnel,.steps,.nurture-grid,.region-grid,.journey{grid-template-columns:1fr}
+  .step,.journey-stage{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .exp-flow{flex-direction:column}
+  .exp-step{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .stats-inner{grid-template-columns:1fr}
+  .stat-item{border-right:none;border-bottom:1px solid #e8e0f0;padding:1rem 0}
+}
+
+/* PASSWORD GATE */
+#lockscreen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 30%,rgba(91,0,153,0.55) 0%,var(--ifs-bg) 65%);padding:1.5rem}
+.lock-card{width:100%;max-width:380px;background:rgba(255,255,255,0.05);border:1px solid var(--ifs-border);border-radius:var(--rl);padding:2.5rem 2rem;text-align:center;backdrop-filter:blur(6px)}
+.lock-icon{width:44px;height:44px;margin:0 auto 1.25rem;border-radius:12px;background:rgba(0,229,160,0.12);border:1px solid rgba(0,229,160,0.3);display:flex;align-items:center;justify-content:center}
+.lock-title{font-size:19px;font-weight:800;color:#fff;margin-bottom:.4rem}
+.lock-sub{font-size:13px;color:var(--ifs-muted);margin-bottom:1.5rem}
+.lock-input{width:100%;padding:11px 14px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.06);color:#fff;font-size:14px;text-align:center;margin-bottom:1rem;outline:none}
+.lock-input:focus{border-color:var(--ifs-green)}
+.lock-btn{width:100%;background:var(--ifs-green);color:var(--ifs-purple);font-size:14px;font-weight:700;padding:11px 24px;border-radius:30px;border:none;cursor:pointer}
+.lock-btn:hover{background:var(--ifs-green-dark)}
+.lock-error{font-size:12px;color:#FF7A7A;margin-top:.85rem;min-height:14px}
+#site-content{display:none}
+</style>
+</head>
+<body>
+
+<div id="lockscreen">
+  <div class="lock-card">
+    <div class="lock-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E5A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <div class="lock-title">Protected content</div>
+    <div class="lock-sub">Enter the campaign password to view the Global AIP hub.</div>
+    <input type="password" id="lock-password" class="lock-input" placeholder="Password" autocomplete="off"/>
+    <button class="lock-btn" onclick="checkPassword()">Unlock</button>
+    <div class="lock-error" id="lock-error"></div>
+  </div>
+</div>
+
+<div id="site-content">
+
+<nav>
+  <div class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="10" stroke="white" stroke-width="1.5" opacity=".3"/>
+      <g transform="translate(16,16)">
+        <line x1="0" y1="-13" x2="0" y2="13" stroke="white" stroke-width="1.5"/>
+        <line x1="-13" y1="0" x2="13" y2="0" stroke="white" stroke-width="1.5"/>
+        <line x1="-9.2" y1="-9.2" x2="9.2" y2="9.2" stroke="white" stroke-width="1.2" opacity=".6"/>
+        <line x1="9.2" y1="-9.2" x2="-9.2" y2="9.2" stroke="white" stroke-width="1.2" opacity=".6"/>
+        <circle cx="0" cy="0" r="3" fill="white"/>
+      </g>
+    </svg>
+    <span class="nav-brand">IFS</span>
+    <div class="nav-divider"></div>
+    <span class="nav-sub">Copperleaf &mdash; Asset Investment Planning</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#value">Value</a></li>
+    <li><a href="#howitworks">How It Works</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#campaign">Campaign</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">&#10022; Internal Campaign Resource</div>
+    <h1>The AIP campaign:<br><span class="hl">what we're saying and why</span></h1>
+    <p class="hero-sub">This hub gives our teams everything needed to understand, activate, and align behind the global IFS Copperleaf AIP campaign &mdash; messaging, content, channels, and regional context in one place.</p>
+    <div class="hero-val">
+      <strong>Our campaign anchor</strong>
+      We lead with the buyer's problem: capital decisions that are siloed, unjustifiable, and misaligned to strategy. IFS Copperleaf solves this through AI-powered capital strategy grounded in the Copperleaf Value Framework.
+    </div>
+    <div class="cta-row">
+      <a href="https://www.copperleaf.com/why-copperleaf/what-is-asset-investment-planning/" class="btn-primary" target="_blank">See the live AIP page</a>
+      <a href="https://engage.copperleaf.com/assetinvestmentplanning" class="btn-outline" target="_blank">Preview the Folloze hub</a>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-label">Employees</div>
+      <div class="stat-num">7,000+</div>
+      <div class="stat-desc">Global reach with local expertise, supporting customers in over 90 countries.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Customers</div>
+      <div class="stat-num">5,500+</div>
+      <div class="stat-desc">Trusted by industry leaders to deliver at the Moment of Service.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">ARR Growth (H1 2025)</div>
+      <div class="stat-num">30%</div>
+      <div class="stat-desc">Accelerating innovation and performance year-on-year.</div>
+    </div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="section-inner">
+    <span class="section-tag">Campaign Problem Framing</span>
+    <h2 class="section-title">The buyer problem we're solving</h2>
+    <p class="section-sub">Our campaign leads with five interconnected pain points that resonate across all target personas. These are the problems we open every conversation with &mdash; not our product.</p>
+    <div class="problem-grid">
+      <div class="prob-card"><h4>Misallocated capital</h4><p>Investments are driven by urgency and politics, not value. The highest-impact opportunities are consistently underfunded.</p></div>
+      <div class="prob-card"><h4>No transparency</h4><p>Decision rationale is locked in spreadsheets. Regulators, boards, and stakeholders cannot see how choices were made.</p></div>
+      <div class="prob-card"><h4>Strategic misalignment</h4><p>Capital plans are built bottom-up. Strategic objectives are added afterward &mdash; not embedded in the decision logic.</p></div>
+      <div class="prob-card"><h4>ESG under pressure</h4><p>ESG commitments cannot be traced to investment decisions. Boards face increasing scrutiny with no defensible data.</p></div>
+      <div class="prob-card"><h4>Fragmented systems</h4><p>ERP, EAM, GIS, and risk systems hold siloed data. There is no unified view from which to make confident trade-offs.</p></div>
+    </div>
+    <div class="problem-statement">
+      <p>The central campaign question we put in front of every buyer:<br><em>&ldquo;Are we investing in the right things to deliver long-term outcomes?&rdquo;</em></p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid" id="personas">
+  <div class="section-inner">
+    <span class="section-tag">Persona Pain Chain</span>
+    <h2 class="section-title">How the problem lands across our target personas</h2>
+    <p class="section-sub">Our campaign targets three audience layers. Understanding how each persona experiences the problem helps us tailor messaging, content, and channel selection at every stage.</p>
+    <div class="persona-tabs">
+      <div class="ptab active" onclick="showPersona('exec',this)">Executive</div>
+      <div class="ptab" onclick="showPersona('planning',this)">Planning</div>
+      <div class="ptab" onclick="showPersona('ops',this)">Operational</div>
+    </div>
+    <div id="persona-exec" class="persona-panel active">
+      <div class="persona-card"><div class="role">CEO / Board</div><h4>Strategic alignment gap</h4><div class="challenge">Capital plans arrive without a clear line of sight to declared corporate objectives, ESG targets, or risk appetite.</div><div class="impact">Impact: Cannot assure stakeholders, regulators, or investors that capital is deployed strategically.</div></div>
+      <div class="persona-card"><div class="role">CFO</div><h4>Unjustifiable spend</h4><div class="challenge">Investment proposals lack quantified value. Trade-offs between competing projects are opaque and politically driven.</div><div class="impact">Impact: No defensible basis for budget decisions under regulatory or board scrutiny.</div></div>
+      <div class="persona-card"><div class="role">CRO / CTO</div><h4>Risk blind spots</h4><div class="challenge">Risk models live in isolation. There is no way to compare the risk consequence of funding versus deferring an investment.</div><div class="impact">Impact: Decisions are made without understanding the downstream risk exposure they create.</div></div>
+    </div>
+    <div id="persona-planning" class="persona-panel">
+      <div class="persona-card"><div class="role">VP Asset Management</div><h4>No single source of truth</h4><div class="challenge">Asset condition, performance, and risk data are spread across systems. Building a coherent capital plan requires manual reconciliation.</div><div class="impact">Impact: Plans are outdated before they are approved. Confidence is low at every level.</div></div>
+      <div class="persona-card"><div class="role">Capital Planning Manager</div><h4>Constrained scenario modeling</h4><div class="challenge">Exploring funding scenarios means rebuilding spreadsheets from scratch. The process takes weeks and cannot respond to change.</div><div class="impact">Impact: Organizations cannot test the consequences of budget constraints or strategic pivots in time to act.</div></div>
+      <div class="persona-card"><div class="role">Regulatory Affairs</div><h4>Defensibility under scrutiny</h4><div class="challenge">Regulatory submissions require evidence that investment decisions are data-driven and aligned to stated objectives.</div><div class="impact">Impact: Approvals are delayed. Organizations are exposed to challenge without audit-ready decision records.</div></div>
+    </div>
+    <div id="persona-ops" class="persona-panel">
+      <div class="persona-card"><div class="role">Operations Director</div><h4>Investment&ndash;execution gap</h4><div class="challenge">Capital plans are approved at portfolio level but do not translate into executable programmes at the operational level.</div><div class="impact">Impact: Work is planned against an approved budget that no longer reflects strategic priorities.</div></div>
+      <div class="persona-card"><div class="role">Maintenance Manager</div><h4>Deferred work visibility</h4><div class="challenge">When capital is constrained, deferred maintenance accumulates without a quantified view of the risk being carried forward.</div><div class="impact">Impact: Decisions about what to defer are made on instinct. Risk backlogs grow invisibly.</div></div>
+      <div class="persona-card"><div class="role">Project Delivery</div><h4>Misaligned priorities</h4><div class="challenge">Approved projects shift in priority during execution as strategies change, but the plan is not updated to reflect it.</div><div class="impact">Impact: Teams execute against an outdated plan. Strategic value is eroded during delivery.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-value" id="value">
+  <div class="section-inner">
+    <span class="section-tag">Our Value Narrative</span>
+    <h2 class="section-title">The outcomes we lead with in every conversation</h2>
+    <p class="section-sub">These six outcomes form the backbone of our messaging hierarchy. Every piece of campaign content &mdash; from a LinkedIn ad to a whitepaper &mdash; maps back to at least one of these.</p>
+    <div class="value-grid">
+      <div class="val-card"><div class="val-icon">&#9672;</div><h4>Capital efficiency</h4><p>Maximize value delivered per dollar of capital through AI-powered capital plan optimization across the full portfolio.</p></div>
+      <div class="val-card"><div class="val-icon">&#9650;</div><h4>Risk reduction</h4><p>Quantify the consequence of every investment decision. Know precisely what risk you carry when you defer.</p></div>
+      <div class="val-card"><div class="val-icon">&#9679;</div><h4>Regulatory confidence</h4><p>Build audit-ready investment records. Demonstrate that every decision is data-driven and defensible under scrutiny.</p></div>
+      <div class="val-card"><div class="val-icon">&#9650;</div><h4>ESG outcomes</h4><p>Trace ESG commitments directly to investment decisions. Close the gap between declared targets and funded plans.</p></div>
+      <div class="val-card"><div class="val-icon">&#9654;</div><h4>Strategic alignment</h4><p>Embed corporate objectives into the investment decision logic &mdash; not layered on afterward as a narrative.</p></div>
+      <div class="val-card"><div class="val-icon">&#9670;</div><h4>Enterprise orchestration</h4><p>Connect strategy to execution across planning, finance, operations, and delivery &mdash; in a single integrated platform.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="light-section" id="howitworks">
+  <div class="section-inner">
+    <span class="section-tag">How It Works</span>
+    <h2 class="section-title">The four-step solution narrative</h2>
+    <p class="section-sub">This is the core product story we use in consideration-stage content. Use this sequence when briefing agencies, writing landing pages, or building sales enablement materials.</p>
+    <div class="steps-wrap">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><h4>Define value</h4><p>Establish the value criteria that will govern every investment decision &mdash; cost, risk, performance, ESG, and strategic objectives.</p></div>
+        <div class="step"><div class="step-num">2</div><h4>Evaluate scenarios</h4><p>Model multiple funding scenarios against real asset data. Quantify the consequences of every trade-off before committing.</p></div>
+        <div class="step"><div class="step-num">3</div><h4>Optimize capital plan</h4><p>AI-powered capital plan optimization surfaces the highest-value portfolio of investments within your constraints.</p></div>
+        <div class="step"><div class="step-num">4</div><h4>Execute with confidence</h4><p>Translate the approved capital plan into executable programmes &mdash; with full traceability from decision to delivery.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<img class="img-banner" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2022/11/1920x500_HighVoltageTransmission-1200x350.webp" alt="High voltage transmission"/>
+
+<section id="campaign">
+  <div class="section-inner">
+    <span class="section-tag">Campaign Activation</span>
+    <h2 class="section-title">How the campaign runs across channels</h2>
+    <p class="section-sub">Five integrated stages from awareness to conversion. Each stage has defined channels, assets, and handoff points. Click the SharePoint links below to access the relevant assets for your function.</p>
+    <div class="funnel">
+      <div class="funnel-stage f1"><div class="funnel-head">Awareness</div><div class="funnel-body"><ul><li>LinkedIn Paid</li><li>YouTube pre-roll</li><li>Google Display</li><li>Demandbase ABM</li></ul></div></div>
+      <div class="funnel-stage f2"><div class="funnel-head">Educate</div><div class="funnel-body"><ul><li>Blog series</li><li>Executive video</li><li>Organic social</li><li>Analyst content</li></ul></div></div>
+      <div class="funnel-stage f3"><div class="funnel-head">Engage</div><div class="funnel-body"><ul><li>Whitepapers</li><li>Gated content</li><li>Landing pages</li><li>Industry reports</li></ul></div></div>
+      <div class="funnel-stage f4"><div class="funnel-head">Nurture</div><div class="funnel-body"><ul><li>Marketo streams</li><li>Webinar series</li><li>Case studies</li><li>ROI tools</li></ul></div></div>
+      <div class="funnel-stage f5"><div class="funnel-head">Convert</div><div class="funnel-body"><ul><li>ROI calculator</li><li>Demo request</li><li>ABM outreach</li><li>Sales handoff</li></ul></div></div>
+    </div>
+    <div class="sp-links">
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign?csf=1&web=1&e=LV7I0v" target="_blank">&rarr; Campaign Hub</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/Assets/Blogs?csf=1&web=1&e=uMSyjC" target="_blank">&rarr; Blog Assets</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/LinkedIn?csf=1&web=1&e=nfZXJ8" target="_blank">&rarr; LinkedIn</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/Demandbase?csf=1&web=1&e=TheUnb" target="_blank">&rarr; Demandbase</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/Landing%20Pages?csf=1&web=1&e=zQF4Qa" target="_blank">&rarr; Landing Pages</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/Marketo?csf=1&web=1&e=z1s9A3" target="_blank">&rarr; Marketo</a>
+      <a href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/Global%20AIP%20Campaign/Hubspot%20Email%20Nurtures?csf=1&web=1&e=p2aVcA" target="_blank">&rarr; Hubspot Email Nurtures</a>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid">
+  <div class="section-inner">
+    <span class="section-tag">Email Nurture Streams</span>
+    <h2 class="section-title">Our Marketo nurture architecture</h2>
+    <p class="section-sub">Three streams mapped to buying stage. Each stream has defined triggers, content assets, and exit criteria. Use this as the reference when briefing Marketo builds or reviewing email performance.</p>
+    <div class="nurture-grid">
+      <div class="nurture-card"><div class="nurture-head tofu">TOFU &mdash; Awareness</div><div class="nurture-body"><ul><li>Problem framing email</li><li>Blog 1: Investment decision clarity</li><li>Blog 2: Modern AIP</li><li>Industry challenge overview</li><li>LinkedIn content amplification</li></ul></div></div>
+      <div class="nurture-card"><div class="nurture-head mofu">MOFU &mdash; Consideration</div><div class="nurture-body"><ul><li>Case study: Utility transformation</li><li>Webinar invite: Capital planning 2026</li><li>Blog 4: Defensible capital planning</li><li>ROI benchmarking tool</li><li>Analyst report: AIP maturity</li></ul></div></div>
+      <div class="nurture-card"><div class="nurture-head bofu">BOFU &mdash; Decision</div><div class="nurture-body"><ul><li>Personalised demo invitation</li><li>ROI calculator &mdash; tailored output</li><li>ABM account-specific outreach</li><li>Executive briefing offer</li><li>Sales-aligned follow-up cadence</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="light-section">
+  <div class="section-inner">
+    <span class="section-tag">Campaign Calendar</span>
+    <h2 class="section-title">Always-on execution cadence</h2>
+    <p class="section-sub">The rolling 2026 campaign schedule across paid, organic, content, and events. Use this to coordinate with regional teams, align agency briefs, and track campaign sequencing.</p>
+    <table class="cal-table">
+      <thead><tr><th>Activity</th><th>Type</th><th>Cadence</th><th>Channel</th></tr></thead>
+      <tbody>
+        <tr><td>Global AIP campaign &mdash; core</td><td><span class="badge badge-on">Always on</span></td><td>Continuous</td><td>Paid + Organic + ABM</td></tr>
+        <tr><td>Blog 1: Investment decision clarity</td><td><span class="badge badge-organic">Organic</span></td><td>Week 1</td><td>Website + LinkedIn + Marketo</td></tr>
+        <tr><td>Blog 2: Modern AIP for better outcomes</td><td><span class="badge badge-organic">Organic</span></td><td>Week 3</td><td>Website + LinkedIn + Marketo</td></tr>
+        <tr><td>Blog 3: AIP transforming utilities</td><td><span class="badge badge-organic">Organic</span></td><td>Week 5</td><td>Website + LinkedIn + Email</td></tr>
+        <tr><td>Blog 4: Defensible capital planning</td><td><span class="badge badge-organic">Organic</span></td><td>Week 7</td><td>Website + LinkedIn + ABM</td></tr>
+        <tr><td>Blog 5: AIP framework &mdash; strategy to execution</td><td><span class="badge badge-organic">Organic</span></td><td>Week 9</td><td>Website + LinkedIn + Email</td></tr>
+        <tr><td>LinkedIn paid &mdash; executive targeting</td><td><span class="badge badge-paid">Paid</span></td><td>Bi-weekly refresh</td><td>LinkedIn Campaign Manager</td></tr>
+        <tr><td>Demandbase ABM wave &mdash; named accounts</td><td><span class="badge badge-paid">Paid</span></td><td>Monthly</td><td>Demandbase</td></tr>
+        <tr><td>Capital strategy webinar series</td><td><span class="badge badge-event">Event</span></td><td>Quarterly</td><td>Zoom + Marketo + LinkedIn</td></tr>
+        <tr><td>ROI tool activation &mdash; BOFU push</td><td><span class="badge badge-paid">Paid</span></td><td>Ongoing</td><td>Landing page + ABM + Sales</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="insights">
+  <div class="section-inner">
+    <span class="section-tag">Thought Leadership Hub</span>
+    <h2 class="section-title">Our content sequence &mdash; from awareness to framework</h2>
+    <p class="section-sub">Five blog articles published in sequence to build the buyer's understanding progressively. Each article has a defined role in the funnel &mdash; use this sequence when planning social promotion, email sends, and ABM content mapping.</p>
+    <div class="blogs">
+      <a class="blog-card" href="https://www.copperleaf.com/ai-driven-asset-investment-planning/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/05/ChatGPT-Image-May-18-2026-05_29_02-PM-1774x500.png" alt=""/><div class="blog-body"><div class="blog-seq">Step 1 &mdash; Clarity</div><h4>AI-driven asset investment planning for capital strategy</h4><p>How AI is reshaping the way capital-intensive organizations plan, prioritize, and defend their investment decisions.</p><span class="blog-link">Read article &rarr;</span></div></a>
+      <a class="blog-card" href="https://www.copperleaf.com/why-capital-allocation-fails-enterprise-value/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/05/data-analysis-1920x500.jpg" alt=""/><div class="blog-body"><div class="blog-seq">Step 2 &mdash; Problem</div><h4>Why capital allocation fails enterprise value</h4><p>Where traditional capital allocation breaks down &mdash; and the enterprise value left on the table as a result.</p><span class="blog-link">Read article &rarr;</span></div></a>
+      <a class="blog-card" href="https://www.copperleaf.com/capital-planning-the-cost-of-waiting-too-long/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/05/The-Rising-Cost-of-Waiting-1456x500.jpg" alt=""/><div class="blog-body"><div class="blog-seq">Step 3 &mdash; Urgency</div><h4>Capital planning: the rising cost of waiting</h4><p>Why delaying capital decisions carries a compounding cost &mdash; and how to quantify the price of inaction.</p><span class="blog-link">Read article &rarr;</span></div></a>
+      <a class="blog-card" href="https://www.copperleaf.com/capital-planning-a-board-level-priority/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/04/IDC-TL-4-.png" alt=""/><div class="blog-body"><div class="blog-seq">Step 4 &mdash; Governance</div><h4>Capital planning: a board-level priority</h4><p>Why capital planning has moved from an operational concern to a standing item on the board agenda.</p><span class="blog-link">Read article &rarr;</span></div></a>
+      <a class="blog-card" href="https://www.copperleaf.com/modern-asset-investment-planning-for-better-outcomes/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/04/idc-blog-6-banner-.png" alt=""/><div class="blog-body"><div class="blog-seq">Step 5 &mdash; Modern AIP</div><h4>Modern asset investment planning for better outcomes</h4><p>How AI-powered AIP replaces guesswork with structured, data-driven decision logic that delivers measurable outcomes.</p><span class="blog-link">Read article &rarr;</span></div></a>
+      <a class="blog-card" href="https://www.copperleaf.com/capital-planning-the-power-of-unified-data-insights/" target="_blank"><img class="blog-img" src="https://d6a9a6a4.delivery.rocketcdn.me/wp-content/uploads/2026/03/IDC-TL-3-Banner-.png" alt=""/><div class="blog-body"><div class="blog-seq">Step 6 &mdash; Data</div><h4>Capital planning: the power of unified data insights</h4><p>Why a single, unified view of asset data is the foundation for confident, defensible capital decisions.</p><span class="blog-link">Read article &rarr;</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid">
+  <div class="section-inner">
+    <span class="section-tag">Regional Activation</span>
+    <h2 class="section-title">How we localise the global campaign</h2>
+    <p class="section-sub">The core campaign message stays consistent globally. These regional overlays define how we adapt tone, proof points, and channel emphasis for each market's dominant buyer pressure.</p>
+    <div class="region-grid">
+      <div class="region-card"><div class="region-head"><div class="region-flag">&#x1F1EA;&#x1F1FA;</div><div class="region-name">Europe</div></div><div class="region-focus">ESG &amp; Regulatory Compliance</div><ul class="region-list"><li>CSRD and Taxonomy alignment</li><li>Regulatory investment defensibility</li><li>Net zero capital planning</li><li>Ofgem, BNetzA, CRE alignment</li><li>Green infrastructure prioritization</li></ul></div>
+      <div class="region-card"><div class="region-head"><div class="region-flag">&#x1F30F;</div><div class="region-name">APJMEA</div></div><div class="region-focus">Growth &amp; Digital Transformation</div><ul class="region-list"><li>Rapid infrastructure buildout</li><li>Digital transformation of planning</li><li>Grid expansion and reliability</li><li>National energy transition programs</li><li>Scaling capital planning capability</li></ul></div>
+      <div class="region-card"><div class="region-head"><div class="region-flag">&#x1F30E;</div><div class="region-name">AMER</div></div><div class="region-focus">Capital Efficiency &amp; ROI</div><ul class="region-list"><li>Rate case and FERC compliance</li><li>Capital plan ROI quantification</li><li>Aging infrastructure prioritization</li><li>Board-level investment justification</li><li>IRA and clean energy investment</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <span class="section-tag">Buyer Journey Map</span>
+    <h2 class="section-title">How we guide buyers through the funnel</h2>
+    <p class="section-sub">Three stages, each with specific content, channel, and conversion logic. Use this as the reference model when building landing pages, briefing sales, or reviewing campaign performance against stage-level KPIs.</p>
+    <div class="journey">
+      <div class="journey-stage"><div class="js-label">Stage 1</div><h4>Awareness</h4><p>Blogs and paid media surface the problem in the language of the buyer. Decision-makers recognize the gap between their current process and what&rsquo;s possible.</p><div class="ch">Blogs &middot; LinkedIn Paid &middot; Google &middot; Demandbase</div></div>
+      <div class="journey-stage"><div class="js-label">Stage 2</div><h4>Consideration</h4><p>Landing pages and Marketo nurture streams deliver structured value &mdash; case studies, ROI benchmarks, and scenario modeling evidence that proves the outcome is achievable.</p><div class="ch">Landing pages &middot; Marketo &middot; Webinars &middot; Whitepapers</div></div>
+      <div class="journey-stage"><div class="js-label">Stage 3</div><h4>Decision</h4><p>ROI tools and personalised demo experiences give buyers the evidence they need to build an internal business case and drive the final investment decision.</p><div class="ch">ROI calculator &middot; Demo &middot; ABM &middot; Sales</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mid">
+  <div class="section-inner">
+    <span class="section-tag">Experience Flow</span>
+    <h2 class="section-title">Hub navigation logic &mdash; how the Folloze experience is structured</h2>
+    <p class="section-sub">This is the intended user flow through the Folloze campaign hub. Use this when briefing hub builds, reviewing UX, or aligning on conversion logic with the digital team.</p>
+    <div class="exp-flow">
+      <div class="exp-step"><div class="esp-num">Entry</div><h4>Persona entry</h4><p>Paid or organic lands the buyer on a role-specific page matching their exact pain.</p></div>
+      <div class="exp-step"><div class="esp-num">Educate</div><h4>Problem validation</h4><p>Blog sequence provides progressive depth &mdash; each article advances the conversation.</p></div>
+      <div class="exp-step"><div class="esp-num">Engage</div><h4>Value evidence</h4><p>Gated content, case studies, and ROI benchmarks justify internal exploration of AIP.</p></div>
+      <div class="exp-step"><div class="esp-num">Nurture</div><h4>Marketo progression</h4><p>Automated streams deliver the right content at each stage between visits.</p></div>
+      <div class="exp-step"><div class="esp-num">Convert</div><h4>Demo or ROI</h4><p>Buyers arrive at demo having already built the business case. Conversion reflects readiness.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="conversion-bg">
+  <div class="conversion-inner">
+    <div class="conv-text">
+      <h2>Questions or feedback on the campaign?</h2>
+      <p>Review the live assets, explore the Folloze experience, or connect with the campaign team to align on regional execution.</p>
+    </div>
+    <div class="conv-ctas">
+      <a href="https://www.copperleaf.com/why-copperleaf/what-is-asset-investment-planning/" class="btn-green" target="_blank">View live AIP page</a>
+      <a href="https://engage.copperleaf.com/assetinvestmentplanning" class="btn-ghost" target="_blank">Preview Folloze hub</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>IFS Copperleaf &mdash; Asset Investment Planning &nbsp;&middot;&nbsp; AI-Powered Capital Strategy &nbsp;&middot;&nbsp; <a href="https://www.copperleaf.com" target="_blank">copperleaf.com</a> &nbsp;&middot;&nbsp; <a href="https://www.ifs.com" target="_blank">ifs.com</a></p>
+</footer>
+
+<script>
+function showPersona(id, el) {
+  document.querySelectorAll('.persona-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.ptab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById('persona-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+var SITE_PASSWORD = "Global AIP";
+
+function unlockSite() {
+  document.getElementById('lockscreen').style.display = 'none';
+  document.getElementById('site-content').style.display = 'block';
+}
+
+function checkPassword() {
+  var input = document.getElementById('lock-password');
+  var errorEl = document.getElementById('lock-error');
+  if (input.value === SITE_PASSWORD) {
+    try { sessionStorage.setItem('aip_hub_unlocked', 'true'); } catch (e) {}
+    unlockSite();
+  } else {
+    errorEl.textContent = 'Incorrect password. Please try again.';
+    input.value = '';
+    input.focus();
+  }
+}
+
+document.getElementById('lock-password').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+(function() {
+  try {
+    if (sessionStorage.getItem('aip_hub_unlocked') === 'true') unlockSite();
+  } catch (e) {}
+})();
+</script>
+
+</div>
+</body>
+</html>
